@@ -1,0 +1,24 @@
+from sklearn.preprocessing import MinMaxScaler
+scaler=MinMaxScaler()
+scaler.fit(df[['Accept']])
+df['Accept']=scaler.transform(df[['Accept']])
+scaler.fit(df[['Expenses']])
+df['Expenses']=scaler.transform(df[['Expenses']])
+df.head()
+km=KMeans(n_clusters=3)
+y_predicted=km.fit_predict(df[['Top10','Accept']])
+y_predicted
+df['cluster']=y_predicted
+df.head()
+df.drop(['Univ'],axis=1,inplace=True)
+array=df.values
+array
+stscaler=StandardScaler().fit(array)
+X=stscaler.transform(array)
+X
+dbscan=DBSCAN(eps=0.2,min_samples=7)
+dbscan.fit(X)
+dbscan.labels_
+c1=pd.DataFrame(dbscan.labels_,columns=['cluster'])
+c1
+pd.concat([df,c1],axis=1)
